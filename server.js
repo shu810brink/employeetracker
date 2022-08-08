@@ -46,9 +46,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + '/views'));
+app.set('view engine', 'ejs');
 
 var index = require('./routes/index');
-app.use('/', index);
+    //require file for user
+app.use('/', index); // used user routes 
+var admin = require('./routes/admin'); 
+app.use('/admin', admin); // used admin routes
+
+// var routes= require('./routes');
+
+// app.use ('route',routes)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -66,7 +74,7 @@ app.use(function (err, req, res, next) {
 
 
 const PORT = process.env.PORT || 3000;
-const baseurl = "https://mindbrick.herokuapp.com/"
+// const baseurl = "https://mindbrick.herokuapp.com/"
 app.listen(PORT, function () {
-  console.log('Server is started on http://127.0.0.1:'+baseurl+PORT);
+  console.log('Server is started on http://127.0.0.1:'+PORT);
 });
