@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var admin = require('../models/admin');
-
-router.get('/admin', function (req, res, next) {
+// var express = require('express');
+// var router = express.Router();
+const admin = require('../models/admin');
+function adminRoute(app){
+app.get('/admin', function (req, res, next) {
 	return res.render('adminregister.ejs');
 });
 
 
-router.post('/admin', function(req, res, next) {
+app.post('/admin', function(req, res, next) {
 	console.log(req.body);
 	var personInfo = req.body;
 
@@ -29,7 +29,7 @@ router.post('/admin', function(req, res, next) {
 							d=1;
 						}
 
-						var newPerson = new User({
+						var newPerson = new admin({
 							unique_id:d,
 							email:personInfo.email,
 							username: personInfo.username,
@@ -57,11 +57,11 @@ router.post('/admin', function(req, res, next) {
 	}
 });
 
-router.get('/adminlogin', function (req, res, next) {
+app.get('/adminlogin', function (req, res, next) {
 	return res.render('adminlogin.ejs');
 });
 
-router.post('/adminlogin', function (req, res, next) {
+app.post('/adminlogin', function (req, res, next) {
 	//console.log(req.body);
 	admin.findOne({email:req.body.email},function(err,data){
 		if(data){
@@ -81,7 +81,7 @@ router.post('/adminlogin', function (req, res, next) {
 	});
 });
 
-router.get('/adminprofile', function (req, res, next) {
+app.get('/adminprofile', function (req, res, next) {
 	console.log("adminprofile");
 	User.findOne({unique_id:req.session.userId},function(err,data){
 		console.log("data");
@@ -95,7 +95,7 @@ router.get('/adminprofile', function (req, res, next) {
 	});
 });
 
-router.get('/adminlogout', function (req, res, next) {
+app.get('/adminlogout', function (req, res, next) {
 	console.log("adminlogout")
 	if (req.session) {
     // delete session object
@@ -109,11 +109,11 @@ router.get('/adminlogout', function (req, res, next) {
 }
 });
 
-router.get('/adminforgetpass', function (req, res, next) {
+app.get('/adminforgetpass', function (req, res, next) {
 	res.render("forgetadminpass.ejs");
 });
 
-router.post('/adminforgetpass', function (req, res, next) {
+app.post('/adminforgetpass', function (req, res, next) {
 	//console.log('req.body');
 	//console.log(req.body);
 	User.findOne({email:req.body.email},function(err,data){
@@ -140,5 +140,6 @@ router.post('/adminforgetpass', function (req, res, next) {
 	});
 	
 });
+}
 
-module.exports = router;
+module.exports = adminRoute;

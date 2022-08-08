@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user');
-
-router.get('/', function (req, res, next) {
+// var express = require('express');
+// var router = express.Router();
+const User = require('../models/user');
+function userRoute(app){
+app.get('/', function (req, res, next) {
 	return res.render('index.ejs');
 });
 
 
-router.post('/', function(req, res, next) {
+app.post('/', function(req, res, next) {
 	console.log(req.body);
 	var personInfo = req.body;
 
@@ -57,11 +57,11 @@ router.post('/', function(req, res, next) {
 	}
 });
 
-router.get('/login', function (req, res, next) {
+app.get('/login', function (req, res, next) {
 	return res.render('login.ejs');
 });
 
-router.post('/login', function (req, res, next) {
+app.post('/login', function (req, res, next) {
 	//console.log(req.body);
 	User.findOne({email:req.body.email},function(err,data){
 		if(data){
@@ -81,7 +81,7 @@ router.post('/login', function (req, res, next) {
 	});
 });
 
-router.get('/profile', function (req, res, next) {
+app.get('/profile', function (req, res, next) {
 	console.log("profile");
 	User.findOne({unique_id:req.session.userId},function(err,data){
 		console.log("data");
@@ -95,7 +95,7 @@ router.get('/profile', function (req, res, next) {
 	});
 });
 
-router.get('/logout', function (req, res, next) {
+app.get('/logout', function (req, res, next) {
 	console.log("logout")
 	if (req.session) {
     // delete session object
@@ -109,11 +109,11 @@ router.get('/logout', function (req, res, next) {
 }
 });
 
-router.get('/forgetpass', function (req, res, next) {
+app.get('/forgetpass', function (req, res, next) {
 	res.render("forget.ejs");
 });
 
-router.post('/forgetpass', function (req, res, next) {
+app.post('/forgetpass', function (req, res, next) {
 	//console.log('req.body');
 	//console.log(req.body);
 	User.findOne({email:req.body.email},function(err,data){
@@ -140,5 +140,5 @@ router.post('/forgetpass', function (req, res, next) {
 	});
 	
 });
-
-module.exports = router;
+}
+module.exports = userRoute;
