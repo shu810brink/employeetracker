@@ -70,7 +70,8 @@ app.post('/adminlogin', function (req, res, next) {
 				//console.log("Done Login");
 				req.session.userId = data.unique_id;
 				//console.log(req.session.userId);
-				res.send({"Success":"Success!"});
+				// res.send({"Success":"Success!"});
+				return res.render('adminpanel.ejs');
 				
 			}else{
 				res.send({"Success":"Wrong password!"});
