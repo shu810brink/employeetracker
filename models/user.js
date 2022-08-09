@@ -4,8 +4,16 @@ var Schema = mongoose.Schema;
 userSchema = new Schema( {
 	
 	unique_id: Number,
+	firstName: {
+		type: String,
+		required: true
+	},
+	lastName: {
+		type: String,
+		required: true
+	},
+	date_of_birth: Date,
 	email: String,
-	username: String,
 	password: String,
 	passwordConf: String
 }),
