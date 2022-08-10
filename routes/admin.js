@@ -1,10 +1,28 @@
 // var express = require('express');
 // var router = express.Router();
 const admin = require('../models/admin');
+const employee = require('../models/user');
 function adminRoute(app){
 app.get('/admin', function (req, res, next) {
 	return res.render('adminregister.ejs');
 });
+
+
+// get addmin panel route
+
+app.get('/adminpanel', function (req, res, next) {
+	employee.find((err,val)=>{
+        if(err){
+            console.log(err)
+        }else{
+            return res.render('adminpanel.ejs',{'value':val})
+        }
+    })
+})
+
+
+
+
 
 
 app.post('/admin', function(req, res, next) {
@@ -71,7 +89,7 @@ app.post('/adminlogin', function (req, res, next) {
 				req.session.userId = data.unique_id;
 				//console.log(req.session.userId);
 				// res.send({"Success":"Success!"});
-				return res.render('adminpanel.ejs');
+				return res.redirect('/adminpanel');
 				
 			}else{
 				res.send({"Success":"Wrong password!"});

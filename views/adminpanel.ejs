@@ -22,36 +22,52 @@
 
 
               </nav>
+             
 			<center >
 				<div  class="table-container ">
                     <h1 class=" heading ">ADMIN CONTROL PANEL</h1>
                     <table class="table">
+                        
                         <thead>
                             <tr>
-                                <th>UserID </th>{}
-                                <th>EMployee Name </th>
-                                <th>Employee Mailid </th>
-                                <th>login date and time </th>
-                                <th>logout date and time</th>
-                                <th>team leader name </th>
-                                <th>Assign Task </th>
-                                <th>status </th>
-                                <th># </th>
+                                <th>Unique_ID</th>
+                                <th>firstName </th>
+                                <th>lastName</th>
+                                <th>Date_of_birth</th>
+                                <th>email</th>
+                                <th>password</th>
+                                <th>passwordConf</th>
                                 
 
                             </tr>   
                         </thead>
+                        
                         <tbody>
-                            <tr>
-                                <td>
+                          
+                          
+                                <% value.forEach(function(student) { %>
+                                    <tr>
+                                        <td><%= student.unique_id %></td>
+                                        <td><%= student.firstName %></td>
+                                        <td><%= student.lastName %></td>
+                                        <td><%= student.date_of_birth %></td>
+                                        <td><%= student.email %></td>
+                                        <td><%= student.password %></td>
+                                        <td><%= student.passwordconf %></td>
+                                        
+                                    </tr>
+                  
+                                <% }); %> 
+                              
 
-                                </td>
-                            </tr>
+                                        
+
                         </tbody>
                     </table>
                 </div>
 			</center>
 		</div>
+       
 		<div class="abc">
 			<a href="/adminlogout">Admin Logout</a>
 		</div>

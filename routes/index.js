@@ -8,6 +8,10 @@ app.get('/', function (req, res, next) {
 app.get('/register', function (req, res, next) {
 	return res.render('index.ejs')
 })
+app.get('/userTask' ,function (req, res, next) {
+	return res.render('userTask.ejs')
+
+})
 
 app.post('/', function(req, res, next) {
 	console.log(req.body);
@@ -77,6 +81,7 @@ app.post('/login', function (req, res, next) {
 				//console.log(req.session.userId);
 				res.send({"Success":"Success!"});
 				
+				
 			}else{
 				res.send({"Success":"Wrong password!"});
 			}
@@ -95,7 +100,8 @@ app.get('/profile', function (req, res, next) {
 			res.redirect('/');
 		}else{
 			//console.log("found");
-			return res.render('data.ejs', {"name":data.firstName + data.lastname,"email":data.email});
+			// return res.render('data.ejs', {"name":data.firstName + data.lastname,"email":data.email});
+			return res.redirect('/userTask');
 		}
 	});
 });
