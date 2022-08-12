@@ -65,12 +65,12 @@ app.post('/admin', function(req, res, next) {
 					}).sort({_id: -1}).limit(1);
 					res.send({"Success":"You are regestered,You can login now."});
 				}else{
-					res.send({"Success":"Email is already used."});
+					res.send({"Failed":"Email is already In  use."});
 				}
 
 			});
 		}else{
-			res.send({"Success":"password is not matched"});
+			res.send({"Failed ":"password does not match"});
 		}
 	}
 });
@@ -92,10 +92,10 @@ app.post('/adminlogin', function (req, res, next) {
 				return res.redirect('/adminpanel');
 				
 			}else{
-				res.send({"Success":"Wrong password!"});
+				res.send({"Failed":"Wrong password!"});
 			}
 		}else{
-			res.send({"Success":"This Email Is not regestered!"});
+			res.send({"Failed":" Email  not registered!"});
 		}
 	});
 });
@@ -138,7 +138,7 @@ app.post('/adminforgetpass', function (req, res, next) {
 	User.findOne({email:req.body.email},function(err,data){
 		console.log(data);
 		if(!data){
-			res.send({"Success":"This Email Is not regestered!"});
+			res.send({"failed":" Email  not registered!"});
 		}else{
 			// res.send({"Success":"Success!"});
 			if (req.body.password==req.body.passwordConf) {
@@ -153,7 +153,7 @@ app.post('/adminforgetpass', function (req, res, next) {
 					res.send({"Success":"Password changed!"});
 			});
 		}else{
-			res.send({"Success":"Password does not matched! Both Password should be same."});
+			res.send({"Failed":"Password does not match! Both Password should be same."});
 		}
 		}
 	});

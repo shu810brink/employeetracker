@@ -32,15 +32,7 @@ input{
     box-sizing: border-box;
 
 }
-.heading{
-    width:400px;
-    font-size: 50px;
-    text-align: center;
-    color: red ;
-    margin-bottom: 40px;
 
-
-}
 .table{
     width: 100%;
     border-collapse: collapse;
@@ -68,4 +60,77 @@ input{
     display: flex;
     justify-content: center;
 
+}
+.usercontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+   padding-right: 400px;
+}
+.table-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:100px;
+   
+}
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:150px;
+   
+    
+}
+/* Color of the links BEFORE scroll */
+.navbar-scroll .nav-link,
+.navbar-scroll .fa-bars,
+.navbar-scroll .navar-brand {
+  color: #4f4f4f;
+}
+
+.navbar-scroll .nav-link:hover {
+  color: #1266f1;
+}
+
+/* Color of the links AFTER scroll */
+.navbar-scrolled .nav-link,
+.navbar-scrolled .fa-bars,
+.navbar-scrolled .navar-brand {
+  color: #4f4f4f;
+}
+
+/* Color of the navbar AFTER scroll */
+.navbar-scroll,
+.navbar-scrolled {
+  background-color: #fff;
+}
+
+/* An optional height of the navbar AFTER scroll */
+.navbar.navbar-scroll.navbar-scrolled {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* css for userTask page  */
+.userprofile{
+  
+  display: flex;
+  height: 100px;
+  width: 200px;
+ 
+  margin-top:5px;
+  float: right;
+ 
+
+}
+.userlist{
+
+  margin-top:20px;
+  list-style-type: none;
+  border-radius: 2px solid red ;
+  height: 20px;
+  
+  
 }

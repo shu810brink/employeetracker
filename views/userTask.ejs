@@ -10,18 +10,52 @@
 	<link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-scroll">
+		<div class="container">
+		  <img src="\css\img\logo.jpg" height="100" alt=""
+			loading="lazy" />
+		  <button class="navbar-toggler ps-0" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+			aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon d-flex justify-content-start align-items-center">
+			  <i class="fas fa-bars"></i>
+			</span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarExample01">
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+			  <li class="nav-item active">
+				<a class="nav-link" aria-current="page" href="/logout" style ='height:50px; color:red'>LOGOUT</a>
+			  </li>
+			  
+			</ul>
+	  
+			
+		  </div>
+		</div>
+	  </nav>
+	  <div class="userprofile">
+		<div id="childProfile">
+			<h4> Employee Detail</h4>
+			<ul class='userlist'>
+				
+				<li>Name : <%=Data.firstName %></li>
+				<li>Designation :  <%=Data.designation %></li>
+				<li>TeamLeader : <%= Data.teamLeader %></li>
+			</ul>
+		</div>
 	
-			<center >
+	  </div>        
+      <h1 class=" heading ">USER CONTROL PANEL</h1>
+	
 				<div  class="table-container ">
-                    <h1 class=" heading ">USER CONTROL PANEL</h1>
+                    
                     <table class="table">
                         
                         <thead>
                             <tr>
-                                <th>Full name</th>
-                                <th>Designation  </th>
-                                <th>Team Leader </th>
-                                <th>Asign Task </th>
+                                <th>Sr No </th>
+                                <th>Project Name</th>
+								<th>TasK </th>
+                                <th>Duration </th>
                                 <th>Task Status</th>
                             
                             </tr>   
@@ -32,27 +66,80 @@
                           
                                
                                     <tr>
-                                        <td>swapnil bankar </td>
-                                        <td>full stack developer </td>
-                                        <td>Piyush Tanwar </td>
-                                        <td>develope web page </td>
-                                        <td> doing</td>
+                                        <td>1 </td>
+                                        <td><select id =parentselect class ="toggle">
+											<option></option>
+											
+										</select></td>
+                                        <td><select id =childselect>
+											<option></option>
+											
+										</select></td>
+                                        <td>
+											<select>
+												<option value=""></option>
+												<option value="">1 Hr</option>
+												<option value="">2 Hr</option>
+												<option value="">3 Hr</option>
+												<option value="">4 Hr</option>
+												<option value="">5 Hr</option>
+												<option value="">6 Hr</option>
+												<option value="">7 Hr</option>
+												<option value="">8 Hr</option>
+												<option value="">9 Hr</option>
+												<option value="">10 Hr</option>
+
+											</select>
+									 </td>
+                                        <td> 
+											<select>
+												<option value=""></option>
+												<option value="">done</option>
+												<option value="">not done</option>
+											</select>
+										</td>
                                        
                                     </tr>
-                  
-                             
+                   
+                              
 
                                         
 
                         </tbody>
+						<br><br>
+					
                     </table>
                 </div>
-			</center>
+			
 		</div>
        
-		<div class="abc">
-			<a href="/adminlogout">Admin Logout</a>
-		</div>
+		
 	</div>
+	<script type="text/javascript">
+		el_parent = document.getElementById("parentselect"); //parent select element
+        el_child = document.getElementById("childselect"); //child select element
+		
+		var mList = {
+			employee_Tracker: ['LOgin logout button', 'data anylyss', 'usee functionality'],
+			iris_database_management:  ['database management', 'uploading excels', 'downlload excel'],
+	        upcoming_Project:  ['Black Raspberry', 'Frozen pudding', 'Neapolitan', 'Strawberry', 'Vanilla', 'Chokecherry', 'Frozen yogurt', 'Booza', 'Frozen yogurt', 'Ice milk'],
+	
+		}	
+		for (key in mList) {
+			el_parent.innerHTML = el_parent.innerHTML + '<option>'+ key +'</option>';
+}
+
+		el_parent.addEventListener('change', function populate_child(e){
+			el_child.innerHTML = '';
+			itm = e.target.value;
+			if(itm in mList){
+					for (i = 0; i < mList[itm].length; i++) {
+						el_child.innerHTML = el_child.innerHTML + '<option>'+ mList[itm][i] +'</option>';
+					}
+			}
+		});
+		el_parent.addEventListener('click', function(e) {})
+
+	</script>
 </body>
 </html>

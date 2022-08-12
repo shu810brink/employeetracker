@@ -12,6 +12,19 @@ userSchema = new Schema( {
 		type: String,
 		required: true
 	},
+	designation: {
+		type: String,
+		required: true
+	},
+	teamLeader: {
+		type: String,
+		required: true
+	},
+	username:{
+		type: String,
+		required: true
+
+	},
 	date_of_birth: Date,
 	email: String,
 	password: String,

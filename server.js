@@ -8,9 +8,9 @@ const  mongoose = require('mongoose');
 const  session = require('express-session');
 const  MongoStore = require('connect-mongo')(session);
 // const DB = "mongodb+srv://Mindbrick:password@mindbrick.zdiyp2p.mongodb.net/employe/?retryWrites=true&w=majority"
-const DB="mongodb://localhost:27017/swapnil"
+// const DB="mongodb://localhost:27017/swapnil"
 // const db= "mongodb+srv://<DB_USER_NAME>:<DB_PASSWORD>@cluster0-vatbg.mongodb.net/registrationFormHeruko?retryWrites=true&w=majority"
-// const DB= "mongodb+srv://Mindbrick:Password@mindbrick.zdiyp2p.mongodb.net/swapnil?retryWrites=true&w=majority"
+const DB= "mongodb+srv://Mindbrick:Password@mindbrick.zdiyp2p.mongodb.net/swapnil?retryWrites=true&w=majority"
 
 mongoose.connect(DB, {
   useNewUrlParser: true,
@@ -77,7 +77,7 @@ app.use(function (err, req, res, next) {
 
 
 const PORT = process.env.PORT || 3000;
-// const baseurl = "https://mindbrick.herokuapp.com/"
+// const baseurl = "https://brinktracker.herokuapp.com/"
 app.listen(PORT, function () {
   console.log('Server is started on http://127.0.0.1:' +PORT);
 });

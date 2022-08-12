@@ -9,7 +9,19 @@ app.get('/register', function (req, res, next) {
 	return res.render('index.ejs')
 })
 app.get('/userTask' ,function (req, res, next) {
-	return res.render('userTask.ejs')
+	User.findOne({unique_id:req.session.userId},(err,data)=>{
+		if(err){
+			console.log(err)
+		}else{
+			console.log(data)
+			
+	return res.render(('userTask.ejs'),{'Data':data})
+			// return res.send(data.designation)
+		}
+	})
+
+	
+
 
 })
 
@@ -18,12 +30,12 @@ app.post('/', function(req, res, next) {
 	const  personInfo = req.body;
 
 
-	if(!personInfo.firstName || !personInfo.lastName || !personInfo.date_of_birth || !personInfo.email||!personInfo.password || !personInfo.passwordConf){
+	if(!personInfo.firstName || !personInfo.lastName || !personInfo.designation|| !personInfo.teamLeader||!personInfo.username ||!personInfo.date_of_birth || !personInfo.email||!personInfo.password || !personInfo.passwordConf){
 		res.send();
 	} else {
 		if (personInfo.password == personInfo.passwordConf) {
 
-			User.findOne({email:personInfo.email},function(err,data){
+			User.findOne({username:personInfo.username},function(err,data){
 				if(!data){
 					var c; 
 					User.findOne({},function(err,data){
@@ -39,6 +51,9 @@ app.post('/', function(req, res, next) {
 							unique_id:c,
 							firstName:personInfo.firstName,
 							lastName:personInfo.lastName,
+							designation: personInfo.designation,
+							teamLeader: personInfo.teamLeader,
+							username: personInfo.username,
 							date_of_birth:personInfo.date_of_birth,
 							email:personInfo.email,
 
@@ -54,14 +69,14 @@ app.post('/', function(req, res, next) {
 						});
 
 					}).sort({_id: -1}).limit(1);
-					res.send({"Success":"You are regestered,You can login now."});
+					res.send({"Success":"You are registered,You can login now."});
 				}else{
-					res.send({"Success":"Email is already used."});
+					res.send({"Failed":"Email is already used."});
 				}
 
 			});
 		}else{
-			res.send({"Success":"password is not matched"});
+			res.send({"Failed":"password does not match"});
 		}
 	}
 });
@@ -72,7 +87,7 @@ app.get('/login', function (req, res, next) {
 
 app.post('/login', function (req, res, next) {
 	//console.log(req.body);
-	User.findOne({email:req.body.email},function(err,data){
+	User.findOne({username:req.body.username},function(err,data){
 		if(data){
 			
 			if(data.password==req.body.password){
@@ -83,10 +98,10 @@ app.post('/login', function (req, res, next) {
 				
 				
 			}else{
-				res.send({"Success":"Wrong password!"});
+				res.send({"Failed":"Wrong password!"});
 			}
 		}else{
-			res.send({"Success":"This Email Is not regestered!"});
+			res.send({"Failed":" Email  not registered !"});
 		}
 	});
 });
@@ -130,7 +145,7 @@ app.post('/forgetpass', function (req, res, next) {
 	User.findOne({email:req.body.email},function(err,data){
 		console.log(data);
 		if(!data){
-			res.send({"Success":"This Email Is not regestered!"});
+			res.send({"Success":"This Email Is not registered !"});
 		}else{
 			// res.send({"Success":"Success!"});
 			if (req.body.password==req.body.passwordConf) {
@@ -145,7 +160,7 @@ app.post('/forgetpass', function (req, res, next) {
 					res.send({"Success":"Password changed!"});
 			});
 		}else{
-			res.send({"Success":"Password does not matched! Both Password should be same."});
+			res.send({"Failed":"Password does not matched! Both Password should be same."});
 		}
 		}
 	});
