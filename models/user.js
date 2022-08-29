@@ -25,11 +25,17 @@ userSchema = new Schema( {
 		required: true
 
 	},
-	date_of_birth: Date,
+	date_of_birth:{
+		type : String,
+		required: true
+	},
 	email: String,
 	password: String,
-	passwordConf: String
-}),
+	
+	img:String,
+	
+	lastLogin : { type : Date, default: Date.now }
+})
 User = mongoose.model('User', userSchema);
 
 module.exports = User;

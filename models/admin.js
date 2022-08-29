@@ -9,6 +9,11 @@ adminSchema = new Schema( {
 	password: String,
 	passwordConf: String
 }),
+adminSchema.virtual('admin', {
+    ref: 'admin',
+    foreignField: 'user',
+    localField: '_id'
+})
 admin = mongoose.model('admin', adminSchema);
 
 module.exports = admin;

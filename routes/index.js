@@ -1,90 +1,25 @@
-// var express = require('express');
-// var router = express.Router();
 const User = require('../models/user');
+const multer=require('multer');
+const project= require('../models/project')
+const fetchprojectData = require('../controllers/employee/task')
+
+
 function userRoute(app){
+let userLogin = false;
+//get login
 app.get('/', function (req, res, next) {
-	return res.render('login.ejs');
+	return res.render('employee/login.ejs');
 });
-app.get('/register', function (req, res, next) {
-	return res.render('index.ejs')
-})
-app.get('/userTask' ,function (req, res, next) {
-	User.findOne({unique_id:req.session.userId},(err,data)=>{
-		if(err){
-			console.log(err)
-		}else{
-			console.log(data)
-			
-	return res.render(('userTask.ejs'),{'Data':data})
-			// return res.send(data.designation)
-		}
-	})
+//get user task
+// app.get('/userTask',fetchprojectData().findProjects)
 
-	
+app.get('/userTask',fetchprojectData().getprojects)
 
-
-})
-
-app.post('/', function(req, res, next) {
-	console.log(req.body);
-	const  personInfo = req.body;
-
-
-	if(!personInfo.firstName || !personInfo.lastName || !personInfo.designation|| !personInfo.teamLeader||!personInfo.username ||!personInfo.date_of_birth || !personInfo.email||!personInfo.password || !personInfo.passwordConf){
-		res.send();
-	} else {
-		if (personInfo.password == personInfo.passwordConf) {
-
-			User.findOne({username:personInfo.username},function(err,data){
-				if(!data){
-					var c; 
-					User.findOne({},function(err,data){
-
-						if (data) {
-							console.log("if");
-							c = data.unique_id + 1;
-						}else{
-							c=1;
-						}
-
-						var newPerson = new User({
-							unique_id:c,
-							firstName:personInfo.firstName,
-							lastName:personInfo.lastName,
-							designation: personInfo.designation,
-							teamLeader: personInfo.teamLeader,
-							username: personInfo.username,
-							date_of_birth:personInfo.date_of_birth,
-							email:personInfo.email,
-
-							password: personInfo.password,
-							passwordConf: personInfo.passwordConf
-						});
-
-						newPerson.save(function(err, Person){
-							if(err)
-								console.log(err);
-							else
-								console.log('Success');
-						});
-
-					}).sort({_id: -1}).limit(1);
-					res.send({"Success":"You are registered,You can login now."});
-				}else{
-					res.send({"Failed":"Email is already used."});
-				}
-
-			});
-		}else{
-			res.send({"Failed":"password does not match"});
-		}
-	}
-});
-
+//get user
 app.get('/login', function (req, res, next) {
-	return res.render('login.ejs');
+	return res.render('employee/login.ejs');
 });
-
+//post login
 app.post('/login', function (req, res, next) {
 	//console.log(req.body);
 	User.findOne({username:req.body.username},function(err,data){
@@ -92,20 +27,30 @@ app.post('/login', function (req, res, next) {
 			
 			if(data.password==req.body.password){
 				//console.log("Done Login");
-				req.session.userId = data.unique_id;
-				//console.log(req.session.userId);
-				res.send({"Success":"Success!"});
-				
-				
+				req.session.userId = data.unique_id
+
+				User.findOneAndUpdate({username:req.username},{lastLogin: Date.now() },(err,data)=>{
+					if (err){
+						console.log('time not updated')
+						res.send({"Success":"Success!"});
+						userLogin = true
+
+					}else{
+						console.log(data,'time updated successfully')
+						res.send({"Success":"Success!"});
+						userLogin = true
+					}
+				})
 			}else{
 				res.send({"Failed":"Wrong password!"});
+				userLogin = false
 			}
 		}else{
 			res.send({"Failed":" Email  not registered !"});
 		}
 	});
 });
-
+//get profile--
 app.get('/profile', function (req, res, next) {
 	console.log("profile");
 	User.findOne({unique_id:req.session.userId},function(err,data){
@@ -120,25 +65,25 @@ app.get('/profile', function (req, res, next) {
 		}
 	});
 });
-
+//get Logout---
 app.get('/logout', function (req, res, next) {
 	console.log("logout")
-	if (req.session) {
     // delete session object
     req.session.destroy(function (err) {
     	if (err) {
     		return next(err);
     	} else {
+			userLogin = false
     		return res.redirect('/');
     	}
     });
-}
-});
 
+});
+//forgot pswrd----
 app.get('/forgetpass', function (req, res, next) {
-	res.render("forget.ejs");
+	res.render("employee/forget.ejs");
 });
-
+// post forgotpswrd
 app.post('/forgetpass', function (req, res, next) {
 	//console.log('req.body');
 	//console.log(req.body);
